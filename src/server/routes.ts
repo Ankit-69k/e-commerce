@@ -21,6 +21,7 @@ export class RegisterRoute {
     const userRoutes = express.Router();
     const userService = new UserService(PrismaClient);
     const userHandler = new UserHandler(userService);
+    app.use(userRoutes);
 
     userRoutes.post("/users", userHandler.createUser.bind(userHandler));
     userRoutes.get("/users/:id", userHandler.getUserById.bind(userHandler));
@@ -31,5 +32,3 @@ export class RegisterRoute {
     return app;
   }
 }
-
-export default new RegisterRoute().routes();
