@@ -18,6 +18,11 @@ app.use((_: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
+app.get("/", (_: CustomRequest, res: CustomResponse) => {
+  res.json({ message: "Hello World" });
+});
+
 const routes = new RegisterRoute();
 // API Routes
 app.use("/api", routes.routes());
