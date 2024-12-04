@@ -6,7 +6,7 @@
     "build": "tsc",
     "start": "ts-node src/index.ts",
     "dev": "nodemon",
-    "vercel-build": "prisma generate && tsc"
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
