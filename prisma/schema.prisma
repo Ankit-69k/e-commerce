@@ -20,7 +20,7 @@ model User {
   name  String
   email String @unique
   phone String
-  orders Order[]
+  orders Order[] 
 }
 
 model Product {
@@ -39,7 +39,7 @@ model Order {
   orderDate  DateTime @default(now())
   quantity   Int
 
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 

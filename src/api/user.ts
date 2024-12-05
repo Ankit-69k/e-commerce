@@ -7,6 +7,7 @@ import { ApiError } from "../utils/apiError";
 export class UserHandler {
   constructor(private userService: UserService) {}
 
+  // Handler to create a User
   createUser = asyncHandler(async (req: Request, res: Response) => {
     const userData = req.body;
     const user = await this.userService.createUser(userData);
@@ -14,6 +15,7 @@ export class UserHandler {
     res.status(response.statusCode).json(response);
   });
 
+  // Handler to get User Details by Id
   getUserById = asyncHandler(async (req: Request, res: Response) => {
     const userId = Number(req.params.id);
     const user = await this.userService.getUserById(userId);
@@ -24,6 +26,7 @@ export class UserHandler {
     res.status(response.statusCode).json(response);
   });
 
+  // Handler to update a User
   updateUser = asyncHandler(async (req: Request, res: Response) => {
     const userId = Number(req.params.id);
     const updateData = req.body;
@@ -39,6 +42,7 @@ export class UserHandler {
     res.status(response.statusCode).json(response);
   });
 
+  // Handler to delete a User
   deleteUser = asyncHandler(async (req: Request, res: Response) => {
     const userId = Number(req.params.id);
     const isDeleted = await this.userService.deleteUser(userId);
@@ -49,6 +53,7 @@ export class UserHandler {
     res.status(response.statusCode).json(response);
   });
 
+  // Handler to get All Users
   getAllUsers = asyncHandler(async (req: Request, res: Response) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
