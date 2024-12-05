@@ -5,6 +5,8 @@ import { UserHandler } from "../api/user";
 import prisma from "../database/db";
 import { ProductService } from "../service/product";
 import { ProductHandler } from "../api/product";
+import { OrderService } from "../service/order";
+import { OrderHandler } from "../api/order";
 
 export class RegisterRoute {
   public routes(): express.Router {
@@ -56,6 +58,37 @@ export class RegisterRoute {
     productRoutes.get(
       "/products",
       productHandler.getAllProducts.bind(productHandler)
+    );
+    productRoutes.get(
+      "/products/stock",
+      productHandler.getTotalStock.bind(productHandler)
+    );
+    productRoutes.get(
+      "/product/users/:id",
+      productHandler.getUsersByProductId.bind(productHandler)
+    );
+
+    // Orders Route
+    const orderRoutes = express.Router();
+    const orderService = new OrderService(PrismaClient);
+    const orderHandler = new OrderHandler(orderService);
+    app.use(orderRoutes);
+
+    orderRoutes.post("/order", orderHandler.createOrder.bind(orderHandler));
+    orderRoutes.get("/order/:id", orderHandler.getOrderById.bind(orderHandler));
+    orderRoutes.put("/order/:id", orderHandler.updateOrder.bind(orderHandler));
+    orderRoutes.delete(
+      "/order/:id",
+      orderHandler.deleteOrder.bind(orderHandler)
+    );
+    orderRoutes.get("/orders", orderHandler.getAllOrders.bind(orderHandler));
+    orderRoutes.get(
+      "/orders/users/:id",
+      orderHandler.getOrdersByUser.bind(orderHandler)
+    );
+    orderRoutes.get(
+      "/orders/lastOrders",
+      orderHandler.getLastSevenOrders.bind(orderHandler)
     );
 
     return app;

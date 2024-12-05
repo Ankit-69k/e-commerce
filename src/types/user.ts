@@ -1,3 +1,5 @@
+import { OrderResponse } from "./order";
+
 export interface CreateUserInput {
   name: string;
   email: string;
@@ -11,12 +13,4 @@ export interface UserResponse {
   email: string;
   phone: string;
   orders: OrderResponse[];
-}
-
-export interface OrderResponse {
-  id: number;
-  userId: number;
-  productId: number;
-  orderDate: Date;
-  quantity: number;
 }

@@ -92,4 +92,27 @@ export class ProductHandler {
 
     res.status(response.statusCode).json(response);
   });
+
+  // Handler to get all the products stock
+  getTotalStock = asyncHandler(async (req: Request, res: Response) => {
+    const totalStock = await this.productService.getTotalStock();
+    const response = new ApiResponse(
+      200,
+      { totalStock },
+      "Total stock retrieved successfully"
+    );
+    res.status(response.statusCode).json(response);
+  });
+
+  // Handler to get all the users by product id
+  getUsersByProductId = asyncHandler(async (req: Request, res: Response) => {
+    const productId = Number(req.params.id);
+    const users = await this.productService.getUsersByProductId(productId);
+    const response = new ApiResponse(
+      200,
+      users,
+      "Users retrieved successfully"
+    );
+    res.status(response.statusCode).json(response);
+  });
 }

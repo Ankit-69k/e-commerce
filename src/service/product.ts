@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { CreateProductInput, ProductResponse } from "../types/product";
 import { ApiError } from "../utils/apiError";
+import { UserResponse } from "../types/user";
 
 export class ProductService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -90,6 +91,40 @@ export class ProductService {
     } catch (error) {
       console.error("Error fetching products:", error);
       throw new ApiError(500, "Unable to fetch products");
+    }
+  }
+
+  // Service to get total stock quantity
+  async getTotalStock(): Promise<number | null> {
+    try {
+      const totalStock = await this.prisma.product.aggregate({
+        _sum: {
+          stock: true,
+        },
+      });
+      return totalStock._sum.stock;
+    } catch (error) {
+      console.error("Error fetching total stock:", error);
+      throw new ApiError(500, "Unable to fetch total stock");
+    }
+  }
+
+  async getUsersByProductId(productId: number): Promise<UserResponse[]> {
+    try {
+      const orders = await this.prisma.order.findMany({
+        where: {
+          productId,
+        },
+        include: {
+          user: true,
+        },
+      });
+
+      const users = orders.map((order) => order.user) as UserResponse[];
+      return users;
+    } catch (error) {
+      console.error("Error fetching users by product ID:", error);
+      throw new ApiError(500, "Unable to fetch users for the product");
     }
   }
 }

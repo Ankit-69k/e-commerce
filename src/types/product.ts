@@ -1,4 +1,4 @@
-import { OrderResponse } from "./user";
+import { OrderResponse } from "./order";
 
 export interface CreateProductInput {
   name: string;
