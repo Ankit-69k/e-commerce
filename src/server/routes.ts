@@ -7,6 +7,7 @@ import { ProductService } from "../service/product";
 import { ProductHandler } from "../api/product";
 import { OrderService } from "../service/order";
 import { OrderHandler } from "../api/order";
+import { routesJson } from "../constant/routeInfo";
 
 export class RegisterRoute {
   public routes(): express.Router {

@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 import { RegisterRoute } from "./routes";
+import { routesJson } from "../constant/routeInfo";
 
 const app = express();
 
@@ -26,6 +27,10 @@ app.get("/", (_: CustomRequest, res: CustomResponse) => {
 const routes = new RegisterRoute();
 // API Routes
 app.use("/api", routes.routes());
+
+app.get("/api", (_, res) => {
+  res.json(routesJson);
+});
 
 // 404 Handler
 app.use("*", (req: Request, res: Response) => {
